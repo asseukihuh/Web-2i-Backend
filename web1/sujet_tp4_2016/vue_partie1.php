@@ -5,8 +5,8 @@ include_once "modele.php";
 include_once "maLibUtils.php"; 
 
 // Traiter l'action demandée
-$action = $_GET['action'];
-$idUser = $_GET['idUser'];
+$action = valider('action', 'GET');
+$idUser = valider('idUser', 'GET');
 if ($action == "Interdire") {
   interdireUtilisateur($idUser);
 }
@@ -49,7 +49,11 @@ $users = listerUtilisateurs("both");
 // préférer un appel à mkOptions($users, ...)
 foreach ($users as $dataUser)
 {
-	echo "<option value=\"$dataUser[id]\">";
+  $selected = "";
+  if ($idUser == $dataUser['id']) {
+    $selected = "selected=\"selected\"";
+  }
+	echo "<option value=\"$dataUser[id]\" $selected>";
 	echo  $dataUser["pseudo"];
 	echo "</option>"; 
 }
